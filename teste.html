@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Teste de API</title>
+</head>
+<body>
+    <h1>Teste de Conexão com Google Apps Script</h1>
+    <h2>Status: <span id="status" style="color: orange;">Pendente...</span></h2>
+    <hr>
+    <h3>Resposta da API:</h3>
+    <p id="response" style="font-weight: bold;"></p>
+
+    <script>
+        // !!! COLE A URL DA SUA NOVA API DE TESTE AQUI DENTRO DAS ASPAS !!!
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxpBsfsEnzunCsFMeWamomySnB51EIn2vQHkBa2BgQ7ad_ffBpRLHhjE1MUuuxNIohQ/exec";
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch(SCRIPT_URL)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro de Rede: ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById('status').textContent = 'SUCESSO!';
+                    document.getElementById('status').style.color = 'green';
+                    document.getElementById('response').textContent = data.message;
+                })
+                .catch(error => {
+                    document.getElementById('status').textContent = 'FALHA!';
+                    document.getElementById('status').style.color = 'red';
+                    document.getElementById('response').textContent = error.toString();
+                    console.error('Erro detalhado:', error);
+                });
+        });
+    </script>
+</body>
+</html>
